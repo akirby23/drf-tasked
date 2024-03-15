@@ -12,11 +12,12 @@ class ProfileList(generics.ListAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
-class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
+class ProfileDetail(generics.RetrieveUpdateAPIView):
     """
-    Read, update or delete a profile if you're the owner
+    Read or update a profile if you're the owner
     Read task details to be added later
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
+
