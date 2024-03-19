@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from rest_framework import generics
+from .serializers import PriorityLevelSerializer
+from .models import PriorityLevel
 
-# Create your views here.
+class PriorityLevelList(generics.ListCreateAPIView):
+    serializer_class = PriorityLevelSerializer
+    queryset = PriorityLevel.objects.all()
+
+
+

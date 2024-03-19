@@ -1,14 +1,11 @@
 from django.db import models
 
-PRIORITY_LEVELS = [
-    ('HIGH', 'High'),
-    ('MEDIUM', 'Medium'),
-    ('LOW', 'Low'),
-]
 
 class PriorityLevel(models.Model):
-    name = models.CharField(
-        max_length=10,
-        choices = PRIORITY_LEVELS, 
-        default='LOW'
-    )
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['-name']
+
+    def __str__(self):
+        return f"{self.name}"

@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from categories.models import Category
+from prioritylevels.models import PriorityLevel
 
 
 class Task(models.Model):
@@ -7,8 +9,8 @@ class Task(models.Model):
     title = models.CharField(max_length=100)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    category = models.ForeignKey('categories.Category', on_delete=models.SET_NULL, null=True)
-    priority_level = models.ForeignKey('prioritylevels.PriorityLevel', on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    priority_level = models.ForeignKey(PriorityLevel, on_delete=models.CASCADE)
     status = models.BooleanField(default=False)
     task_detail = models.TextField(max_length=500)
     assignee = models.ForeignKey(
@@ -18,7 +20,7 @@ class Task(models.Model):
         )
 
     class Meta:
-        ordering = []
+        ordering = ['-created_on']
 
     def __str__(self):
-        return f'{self.id} {self.title}'
+        return f'Task {self.id}: {self.title}'
