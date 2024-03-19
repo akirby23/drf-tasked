@@ -1,3 +1,4 @@
+from drf_tasked.permissions import IsOwnerOrReadOnly
 from rest_framework import generics, permissions
 from .serializers import TaskSerializer
 from .models import Task
@@ -12,5 +13,5 @@ class TaskList(generics.ListCreateAPIView):
 
 class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = Task.objects.all()
