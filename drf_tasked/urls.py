@@ -27,6 +27,7 @@ urlpatterns = [
     ),
     path('', include('profiles.urls')),
     path('', include('tasks.urls')),
+    path('', include('comments.urls')),
     path('', include('categories.urls')),
     path('', include('prioritylevels.urls')),
 ]
