@@ -5,5 +5,5 @@ class PriorityLevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = PriorityLevel
         fields = [
-            'id', 'name', 
+            'id', 'name', 'description',
         ]
