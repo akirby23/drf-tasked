@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth.registration',
     'corsheaders',
+    'django_filters',
     'profiles',
     'categories',
     'prioritylevels',
@@ -109,6 +110,10 @@ else:
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'drf_tasked.urls'
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
 
 TEMPLATES = [
     {

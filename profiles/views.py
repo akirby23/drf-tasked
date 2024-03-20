@@ -1,5 +1,6 @@
 from rest_framework import generics
 from drf_tasked.permissions import IsOwnerOrReadOnly
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Profile
 from .serializers import ProfileSerializer
 
@@ -11,6 +12,10 @@ class ProfileList(generics.ListAPIView):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    filter_backend = [DjangoFilterBackend]
+    filterset_fields = [
+        'owner__profile',
+     ]
 
 class ProfileDetail(generics.RetrieveUpdateAPIView):
     """
