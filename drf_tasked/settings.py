@@ -115,6 +115,8 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
+CSRF_TRUSTED_ORIGINS = ['https://8000-akirby23-drftasked-k8e25zkxdbp.ws-eu110.gitpod.io']
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

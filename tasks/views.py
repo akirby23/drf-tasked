@@ -1,5 +1,5 @@
 from drf_tasked.permissions import IsOwnerOrReadOnly
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import TaskSerializer
 from .models import Task
@@ -8,7 +8,15 @@ class TaskList(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Task.objects.all()
-    filter_backend = [DjangoFilterBackend]
+    filter_backends = [
+        filters.SearchFilter,
+        DjangoFilterBackend
+        ]
+    search_fields = [ 
+        'owner__username',
+        'title', 
+        'category__name'
+    ]
     filterset_fields = [
         'owner__profile',
         'assignee',
