@@ -11,6 +11,26 @@ class ProfileSerializer(serializers.ModelSerializer):
         request = self.context['request']
         return request.user == obj.owner
 
+    def validate_image(self, value):
+        """
+        Throws a value error if the profile picture 
+        is larger than 2MB, or more than 1080px in 
+        height/width
+        """
+        if value.size > 1024 * 1024 * 2:
+            raise serializers.ValidationError(
+                'Profile picture size larger than 2MB!'
+            )
+        if value.image.width > 1080:
+            raise serializers.ValidationError(
+                'Profile picture width larger than 1080px!'
+            )
+        if value.image.height > 1080:
+            raise serializers.ValidationError(
+                'Profile picture height larger than 1080px!'
+            )
+        return value
+
     class Meta:
         model = Profile
         fields = [
