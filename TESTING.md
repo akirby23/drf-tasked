@@ -9,7 +9,11 @@
 - [Manual Testing](#manual-testing)
 - [Bugs](#bugs)
 
-## User Story Testing
+## Automated Testing
+
+## Manual Testing
+
+### User Stories
 
 | User Story  |  Status |
 |---|---|
@@ -23,10 +27,7 @@
 | **Search for API Data** <br> As a site owner/developer, I can search for specific data within the API so that I can easily find the results that I need. |   |
 | **Filter API Data** <br> As a site owner/developer, I can filter the API's data so that I can retrieve the specific data that I need. |   |
 
-
-## Automated Testing
-
-## Manual Testing
+### Validator Testing
 
 ## Bugs
 
