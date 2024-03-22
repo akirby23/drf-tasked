@@ -28,12 +28,18 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Code below obtained from CI's drf-api walkthrough
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [(
         'rest_framework.authentication.SessionAuthentication'
         if 'DEV' in os.environ
         else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
     )],
+    # Pagination
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DATETIME_FORMAT': '%d %b %Y',
 }
 
 REST_USE_JWT = True
@@ -59,7 +65,6 @@ ALLOWED_HOSTS = [
     '8000-akirby23-drftasked-k8e25zkxdbp.ws-eu110.gitpod.io',
     'drf-tasked-ec51bc3bfc2d.herokuapp.com'
     ]
-
 
 # Application definition
 
