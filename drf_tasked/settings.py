@@ -51,6 +51,7 @@ REST_USE_JWT = True
 JWT_AUTH_SECURE = True
 JWT_AUTH_COOKIE = 'my-app-auth'
 JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
+JWT_AUTH_SAMESITE = 'None'
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'drf_tasked.serializers.CurrentUserSerializer'
@@ -63,7 +64,7 @@ REST_AUTH_SERIALIZERS = {
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'DEV'
+DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
     'localhost', 
@@ -127,10 +128,6 @@ if 'CLIENT_ORIGIN_DEV' in os.environ:
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'drf_tasked.urls'
-
-REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
-}
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-akirby23-drftasked-k8e25zkxdbp.ws-eu110.gitpod.io', 
