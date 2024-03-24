@@ -39,10 +39,13 @@ class CategoryDetailViewTests(APITestCase):
         response = self.client.get('/categories/3/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    # def test_superuser_can_update_category(self):
-    #     self.client.login(username='admin', password='q5vwm5pv')
-    #     response = self.client.put('/categories/1/', {'description': 'Edited category'})
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    def test_superuser_can_update_category(self):
+        self.client.login(username='admin', password='q5vwm5pv')
+        response = self.client.put('/categories/1/', {'name': 'Travel', 'description': 'Travel'})
+        category = Category.objects.filter(pk=1).first()
+        self.assertEqual(category.name, 'Travel')
+        self.assertEqual(category.description, 'Travel')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_non_superuser_cannot_update_category(self):
         self.client.login(username='user', password='1mn6ah5d')
