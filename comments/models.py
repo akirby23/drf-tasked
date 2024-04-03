@@ -13,5 +13,5 @@ class Comment(models.Model):
         ordering = ['-created_on']
 
     def __str__(self):
-        return f'Comment {self.id}: {self.comment_detail}'
+        return self.comment_detail
 
