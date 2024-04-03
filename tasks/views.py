@@ -38,4 +38,6 @@ class TaskList(generics.ListCreateAPIView):
 class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
     permission_classes = [IsOwnerOrReadOnly | IsAssigneeOrReadOnly]
-    queryset = Task.objects.all()
+    queryset = Task.objects.annotate(
+        comments_count=Count('comment', distinct=True)
+    ).order_by('-created_on')
