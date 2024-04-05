@@ -36,13 +36,13 @@ class ProfileList(generics.ListAPIView):
 class ProfileDetail(generics.RetrieveUpdateAPIView):
     """
     Read or update a profile if you're the owner
-    Read task details to be added later
+    Displays tasks count
     """
     queryset = Profile.objects.annotate(
         created_tasks_count=Count(
             'owner__task', 
             distinct=True
-            )
+            ),
     ).order_by('-created_on')
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]

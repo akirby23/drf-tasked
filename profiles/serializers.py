@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Profile
+from tasks.models import Task
 
 # Code below has been adapted from Code Institute's drf-api walkthrough project
 
@@ -36,5 +37,5 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = [
             'id', 'owner', 'is_owner', 'username', 'created_on', 'updated_on', 'content',
-            'profile_picture', 'created_tasks_count', 'assigned_tasks_count',
+            'profile_picture', 'created_tasks_count',
         ]
