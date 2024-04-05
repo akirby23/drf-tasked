@@ -12,7 +12,7 @@ class ProfileList(generics.ListAPIView):
     Retrieves and lists all profiles
     """
     queryset = Profile.objects.annotate(
-        tasks_count=Count(
+        created_tasks_count=Count(
             'owner__task', 
             distinct=True
             )
@@ -27,7 +27,7 @@ class ProfileList(generics.ListAPIView):
         'owner__username',
     ]
     ordering_fields = [
-        'tasks_count',
+        'created_tasks_count',
     ]
     filterset_fields = [
         'owner__profile',
@@ -38,6 +38,11 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
     Read or update a profile if you're the owner
     Read task details to be added later
     """
-    queryset = Profile.objects.all()
+    queryset = Profile.objects.annotate(
+        created_tasks_count=Count(
+            'owner__task', 
+            distinct=True
+            )
+    ).order_by('-created_on')
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
