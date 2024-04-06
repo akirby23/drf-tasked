@@ -23,7 +23,6 @@ class TaskList(generics.ListCreateAPIView):
         'comments_count'
     ]
     search_fields = [ 
-        'owner__username',
         'title', 
         'category__name'
     ]
