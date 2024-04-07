@@ -1,3 +1,4 @@
+from django.contrib.humanize.templatetags.humanize import naturaltime
 from rest_framework import serializers
 from .models import Task
 from .models import TASK_STATUS
@@ -13,6 +14,7 @@ class TaskSerializer(serializers.ModelSerializer):
     status_name = serializers.SerializerMethodField()
     assignee_name = serializers.ReadOnlyField(source='assignee.username')
     comments_count = serializers.ReadOnlyField()
+    updated_on = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -25,6 +27,9 @@ class TaskSerializer(serializers.ModelSerializer):
     def get_status_name(self, obj):
         status_name = obj.get_status_display()
         return status_name
+
+    def get_updated_on(self, obj):
+        return naturaltime(obj.updated_on)
 
     class Meta:
             model = Task
