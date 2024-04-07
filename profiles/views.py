@@ -23,9 +23,6 @@ class ProfileList(generics.ListAPIView):
         filters.SearchFilter,
         DjangoFilterBackend
         ]
-    search_fields = [
-        'owner__username',
-    ]
     ordering_fields = [
         'created_tasks_count',
     ]
