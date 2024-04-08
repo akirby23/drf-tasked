@@ -20,7 +20,6 @@ class ProfileList(generics.ListAPIView):
     serializer_class = ProfileSerializer
     filter_backends = [
         filters.OrderingFilter,
-        filters.SearchFilter,
         DjangoFilterBackend
         ]
     ordering_fields = [
@@ -39,7 +38,7 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
         created_tasks_count=Count(
             'owner__task', 
             distinct=True
-            ),
+            )
     ).order_by('-created_on')
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]

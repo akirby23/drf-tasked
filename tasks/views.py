@@ -29,6 +29,9 @@ class TaskList(generics.ListCreateAPIView):
     filterset_fields = [
         'owner__profile',
         'assignee',
+        'category',
+        'priority_level',
+        'status',
      ]
 
     def perform_create(self, serializer):
