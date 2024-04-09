@@ -129,8 +129,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'drf_tasked.urls'
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://8000-akirby23-drftasked-k8e25zkxdbp.ws-eu110.gitpod.io', 
+CSRF_TRUSTED_ORIGINS = [ 
     'https://drf-tasked-ec51bc3bfc2d.herokuapp.com'
     ]
 
