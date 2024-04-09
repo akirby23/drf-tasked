@@ -43,3 +43,4 @@ class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Task.objects.annotate(
         comments_count=Count('comment', distinct=True)
     ).order_by('-created_on')
+    
