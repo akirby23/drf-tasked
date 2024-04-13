@@ -1,7 +1,8 @@
 from rest_framework import permissions
 
-# Code below has been borrowed from DRF documentation: 
+# Code below has been borrowed from DRF documentation:
 # https://www.django-rest-framework.org/tutorial/4-authentication-and-permissions/
+
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """

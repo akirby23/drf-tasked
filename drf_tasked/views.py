@@ -12,7 +12,8 @@ def root_route(request):
         "message": "Welcome to the Tasked API!"
     })
 
-# Fix for dj-rest-auth logout 
+
+# Fix for dj-rest-auth logout
 @api_view(['POST'])
 def logout_route(request):
     response = Response()

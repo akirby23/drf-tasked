@@ -2,8 +2,8 @@ from rest_framework import serializers
 from .models import Profile
 from tasks.models import Task
 
-# Code below has been adapted from Code Institute's drf-api walkthrough project
 
+# Code below has been adapted from Code Institute's drf-api walkthrough project
 class ProfileSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
@@ -15,8 +15,8 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     def validate_image(self, value):
         """
-        Throws a value error if the profile picture 
-        is larger than 2MB, or more than 1080px in 
+        Throws a value error if the profile picture
+        is larger than 2MB, or more than 1080px in
         height/width
         """
         if value.size > 1024 * 1024 * 2:
@@ -33,10 +33,9 @@ class ProfileSerializer(serializers.ModelSerializer):
             )
         return value
 
-
     class Meta:
         model = Profile
         fields = [
-            'id', 'owner', 'is_owner', 'username', 'created_on', 'updated_on', 'content',
-            'profile_picture', 'created_tasks_count', 
+            'id', 'owner', 'is_owner', 'username', 'created_on', 'updated_on',
+            'content', 'profile_picture', 'created_tasks_count',
         ]

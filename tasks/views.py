@@ -5,12 +5,16 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import TaskSerializer
 from .models import Task
 
+
 class TaskList(generics.ListCreateAPIView):
+    """
+    Lists all tasks
+    """
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Task.objects.annotate(
         comments_count=Count(
-            'comment', 
+            'comment',
             distinct=True,
         )
     ).order_by('-created_on')
@@ -18,12 +22,12 @@ class TaskList(generics.ListCreateAPIView):
         filters.OrderingFilter,
         filters.SearchFilter,
         DjangoFilterBackend
-        ] 
-    ordering_fields=[
+        ]
+    ordering_fields = [
         'comments_count'
     ]
-    search_fields = [ 
-        'title', 
+    search_fields = [
+        'title',
         'category__name'
     ]
     filterset_fields = [
@@ -37,10 +41,14 @@ class TaskList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+
 class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Displays individual task details
+    Allows tasks to be retrieved, updated & destroyed
+    """
     serializer_class = TaskSerializer
     permission_classes = [IsOwnerOrReadOnly | IsAssigneeOrReadOnly]
     queryset = Task.objects.annotate(
         comments_count=Count('comment', distinct=True)
     ).order_by('-created_on')
-    

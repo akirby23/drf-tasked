@@ -5,22 +5,33 @@ from .models import Profile
 
 
 class ProfileTests(APITestCase):
+    """
+    Tests for profile creation upon signup
+    """
     def test_profile_created_upon_signup(self):
         User.objects.create_user(username='jane', password='p2T9GMDF')
         user = User.objects.get(username='jane')
         profile = Profile.objects.get(owner=user)
         self.assertTrue(Profile.objects.filter(owner=user).exists())
 
+
 class ProfileListTests(APITestCase):
+    """
+    Tests profile list endpoints
+    """
     def test_retrieve_profile_list(self):
         response = self.client.get('/profiles/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+
 class ProfileDetailTests(APITestCase):
+    """
+    Tests profile detail view endpoints
+    """
     def setUp(self):
         user1 = User.objects.create_user(username='jane', password='p2T9GMDF')
         user2 = User.objects.create_user(username='john', password='4Jp7L3Kx')
-        
+
     def test_retrieve_profile_with_valid_id(self):
         response = self.client.get('/profiles/2/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -28,7 +39,7 @@ class ProfileDetailTests(APITestCase):
     def test_cannot_retrieve_profile_with_invalid_id(self):
         response = self.client.get('/profiles/3/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-    
+
     def test_can_update_own_profile_while_logged_in(self):
         self.client.login(username='jane', password='p2T9GMDF')
         response = self.client.put('/profiles/1/', {'username': 'janie'})

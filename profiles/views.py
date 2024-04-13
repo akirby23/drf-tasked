@@ -5,15 +5,15 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Profile
 from .serializers import ProfileSerializer
 
-# The models below have been adapted from Code Institute's drf-api walkthrough
 
+# The models below have been adapted from Code Institute's drf-api walkthrough
 class ProfileList(generics.ListAPIView):
     """
     Retrieves and lists all profiles
     """
     queryset = Profile.objects.annotate(
         created_tasks_count=Count(
-            'owner__task', 
+            'owner__task',
             distinct=True
             )
     ).order_by('-created_on')
@@ -29,6 +29,7 @@ class ProfileList(generics.ListAPIView):
         'owner__profile',
      ]
 
+
 class ProfileDetail(generics.RetrieveUpdateAPIView):
     """
     Read or update a profile if you're the owner
@@ -36,7 +37,7 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
     """
     queryset = Profile.objects.annotate(
         created_tasks_count=Count(
-            'owner__task', 
+            'owner__task',
             distinct=True
             )
     ).order_by('-created_on')

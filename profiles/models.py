@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model): 
+    """
+    Related to the User model
+    """
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     username = models.CharField(max_length=150, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
