@@ -41,6 +41,16 @@ All tests that have been written have passed.
 | **Search for API Data** <br> As a site owner/developer, I can search for specific data within the API so that I can easily find the results that I need. | Pass |
 | **Filter API Data** <br> As a site owner/developer, I can filter the API's data so that I can retrieve the specific data that I need. | Pass  |
 
+### API Features
+
+| Feature | Expected Behaviour | Status |
+|---|---|---|
+| Task Search | Users can search for tasks by title or by category | Pass  |
+| Task Filter  | Tasks can be filtered by owner, category, priority level, assignee & status  | Pass  |
+| Profile Filter  | Profiles can be filtered by profile owner | Pass  |
+| Comments Filter  | Comments can be filtered by their associated tasks  | Pass |
+| Admin Panel  | Superusers can access the admin panel to perform CRUD actions on tasks, categories, priority levels, comments, profiles & users  | Pass  |
+
 ### Validator Testing
 
 All Python files have been validated via the [CI PEP8 Python Linter](https://pep8ci.herokuapp.com/).
@@ -130,7 +140,10 @@ All Python files have been validated via the [CI PEP8 Python Linter](https://pep
 
 ## Bugs
 
-There are no known bugs at this time.
+| Feature  |  Issue | Status  | Notes  |
+|---|---|---|---|
+| Image Validation  | Logic has been added to the Profile serializer to throw ValidationErrors if a user attempts to upload a profile picture that is over 2MB in size or over 1080px in height or width. Validation errors are not being thrown  | Unresolved  | This issue has not yet been resolved due to time constraints. User experience is not negatively affected as default profile pictures are set upon profile creation, and this bug does not prevent users from uploading new profile pictures.  |
+
 
 [Back to the top](#drf-tasked-api--testing)
 <br>
