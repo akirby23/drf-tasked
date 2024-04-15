@@ -47,8 +47,8 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = [
             'id', 'owner', 'is_owner', 'is_assignee', 'profile_id',
-            'assignee_profile_id', 'profile_image', 'category', 
-            'category_name', 'priority_level', 'priority_level_name', 
-            'assignee', 'assignee_name', 'title', 'created_on', 'updated_on', 
+            'assignee_profile_id', 'profile_image', 'category',
+            'category_name', 'priority_level', 'priority_level_name',
+            'assignee', 'assignee_name', 'title', 'created_on', 'updated_on',
             'status', 'status_name', 'task_detail', 'comments_count',
         ]
