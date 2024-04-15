@@ -1,5 +1,12 @@
 # DRF Tasked API
 
+DRF Tasked is a Django Rest Framework API that offers task management functionality. 
+It has been designed as a foundation for the [Tasked](https://github.com/akirby23/tasked/) app, however it could be used for other similar task management applications. 
+
+The API offers user authentication, full CRUD (Create, Read, Update, Delete) functionality for tasks and comments, search & filter options to allow users to find the data they need easily and categorisation & prioritisation to allow users to manage their tasks effectively.
+
+[DRF Tasked live link](https://drf-tasked-ec51bc3bfc2d.herokuapp.com/)
+
 ## Table of Contents
 
 - [Features](#features)
@@ -14,17 +21,134 @@
 
 ## Features
 
-- User Authentication
-- Task Creation
-- Task Categorisation
-- Task Prioritisation
-- Commenting
-- Task Assignment
-- Timestamps
+- **User Authentication:** Users can sign up, log in & log out. User profiles are created automatically upon sign up.
+- **Tasks:** Authenticated users can create & read tasks. Task owners/assignees can edit and delete their tasks. 
+- **Task Categorisation:** Authenticated users can assign categories to tasks upon task creation & by editing their tasks. Admin users can add new categories to the database.
+- **Task Prioritisation:** Authenticated users can assign priority levels to tasks upon task creation & by editing their tasks. Admin users can add new priority levels to the database.
+- **Task Status assignment:** By default, tasks are set to "In Progress" status upon creation. Task owners/assignees can change the status to "Completed" once they have completed the task.
+- **Commenting:** Authenticated users can comment on their own & other user's tasks. Comment owner's can edit & delete their comments.
+- **Task Assignment:** Authenticated users can assign tasks to other users upon task creation or by editing the task. 
+- **User Profiles:** Authenticated users can access user profiles. Profile owners can edit their own profiles.
+- **Search & Filter:** Users can search for tasks by category name or by title. Tasks can be filtered by owner, category, priority level & status.
+- **Timestamps:** Created on & updated on timestamps are available on tasks, comments & profiles.
 
 ## Database Design  
 
+### Models
+
+<details>
+<summary>Task</summary>
+
+|  Name | Field Type  |  Validation | Notes  |    
+|---|---|---|---|
+| owner  | ForeignKey  | on_delete=models.CASCADE | One-to-one relationship to the User model  |
+| title  | CharField  | max_length=100  |   |
+| created_on  | DateTimeField  | auto_now_add=True  |   |
+| updated_on  | DateTimeField  | auto_now=True  |   |
+| category  | ForeignKey  | on_delete=models.CASCADE  | ForeignKey relationship to the Category model  |
+| priority_level  | ForeignKey  | on_delete=models.CASCADE | ForeignKey relationship to the PriorityLevel model   |
+| task_detail  | TextField  | max_length=500  |   |
+| assignee  | ForeignKey  | on_delete=models.SET_NULL, null=True, related_name='assignee'  | ForeignKey relationship to the User model   |
+| status  | CharField  | max_length=50, choices=TASK_STATUS, default='IN_PROGRESS'  | TASK_STATUS = [('IN_PROGRESS', 'In Progress'),('COMPLETED', 'Completed')]  |
+
+</details>
+
+<details>
+<summary>Comment</summary>
+
+|  Name | Field Type  |  Validation | Notes  |      
+|---|---|---|---|
+| owner  | ForeignKey  | on_delete=models.CASCADE  | ForeignKey relationship to the User model  |
+| task | ForeignKey  | on_delete=models.CASCADE  | ForeignKey relationship to the Task model  |
+| created_on  | DateTimeField  | auto_now_add=True  |   |
+| updated_on  | DateTimeField  | auto_now=True  |   |
+| comment_detail  | TextField  | max_length=500  |   |
+
+</details>
+
+<details>
+<summary>Profile</summary>
+
+|  Name | Field Type  |  Validation | Notes  |      
+|---|---|---|---|
+| owner  | OneToOneField  | on_delete=models.CASCADE  | One-to-one relationship to the User model   |
+| username  | CharField  | max_length=150, blank=True  |   |
+| created_on  | DateTimeField  | auto_now_add=True  |   |
+| updated_on  | DateTimeField  | auto_now=True  |   |
+| content  | TextField  | max_length=450, blank=True  |   |
+| profile_picture | ImageField  |   |   |
+
+</details>
+
+<details>
+<summary>Category</summary>
+
+|  Name | Field Type  |  Validation | Notes  |       
+|---|---|---|---|
+| name  | CharField  | max_length=100  |   |
+| description | TextField | max_length=100  |   |
+
+</details>
+
+<details>
+<summary>Priority Level</summary>
+
+|  Name | Field Type  |  Validation | Notes  |    
+|---|---|---|---|
+| name  | CharField  | max_length=100  |
+| description | TextField | max_length=100  |
+
+</details>
+
+<details>
+<summary>User</summary>
+
+Django AllAuth model, which has not been modified.
+
+|  Name | Field Type  |  Validation | Notes  |    
+|---|---|---|---|
+| username  | CharField  | Default Django AllAuth validation  |   |
+| password |  CharField | Default Django AllAuth validation  |   |
+
+</details>
+
+### Database Scheme
+
+The models above have been designed based on this Entity Relationship Diagram:
+
+![Tasked Entity Relationship Diagram](documentation/readme/tasked-erd.jpg)
+
 ## Agile Methodology
+
+The drf-tasked API was developed using an Agile approach.
+
+- User stories were prioritised using the MoSCoW method:
+
+| Priority Level | Description  |
+|---|---|
+| `must-have ` | Essential features  |
+| `should-have` | Important but not absolutely essential features  |
+| `could-have ` | Nice to have but not essential features  |
+| `wont-have`  | Non essential features, may be implemented in the future |
+
+- GitHub Issues was used to document & to prioritise each of the user stories.
+
+![GitHub Issues must have user stories](documentation/readme/github-issues-must-have.PNG)
+![GitHub Issues should have user stories](documentation/readme/github-issues-should-have.PNG)
+![GitHub Issues could have user stories](documentation/readme/github-issues-could-have.PNG)
+
+- The user stories were refined & actioned in 4 different iterations using GitHub milestones: 
+
+| Iteration | Screenshot |
+|---|---|
+| Iteration 1: Development Environment  | ![GitHub milestone - Iteration 1](documentation/readme/github-milestone-iteration-1.PNG)  |
+| Iteration 2: Account Registration, Sign In & Profile Endpoints | ![GitHub milestone - Iteration 2](documentation/readme/github-milestone-iteration-2.PNG)  | 
+| Iteration 3: Tasks & Features | ![GitHub milestone - Iteration 3](documentation/readme/github-milestone-iteration-3.PNG)  | 
+| Iteration 4: Search & Filter  | ![GitHub milestone - Iteration 4](documentation/readme/github-milestone-iteration-4.PNG)  | 
+
+A [GitHub project](https://github.com/users/akirby23/projects/6) was used to manage & track the progress of the app's development:
+
+![GitHub project](documentation/readme/github-project.PNG)
 
 ## Technologies Used
 
@@ -40,6 +164,7 @@
 - [Django-cors-headers](https://pypi.org/project/django-cors-headers/) for handling the server headers required for Cross-Origin Resource Sharing (CORS).
 - [Cloudinary](https://console.cloudinary.com/) to host the images.
 - [Pillow](https://pypi.org/project/pillow/) for image processing.
+- [ElephantSQL](https://customer.elephantsql.com/signup): to host the PostgreSQL database.
 - [PostgreSQL](https://www.postgresql.org/) as the object-relational database.
 - [Heroku](https://www.heroku.com/) to deploy the API.
 - [Git](https://git-scm.com/) for version control.
@@ -64,7 +189,15 @@ This application has been deployed to Heroku using the following steps:
 
 #### Create the database 
 
-**Placeholder**
+This app requires the use of a PostgreSQL database. 
+
+To obtain your own database:
+
+1. Navigate to [elephantSQL.com](https://customer.elephantsql.com/) or alternative PostreSQL hosting service and register for an account. 
+2. Click on "Create New Instance".
+3. Name your database and select the "Tiny Turtle (Free)" plan. 
+4. Click "Select Region", and on the next page, select your preferred region. 
+5. Once you've created your instance, click on the name of the instance to access the database URL & password.
 
 #### Cloudinary
 
@@ -75,6 +208,7 @@ To obtain your Cloudinary key:
 1. Navigate to [cloudinary.com](https://cloudinary.com/) and create an account. 
 2. Navigate to the dashboard to obtain your API Environment Variable.
 3. When copying the API Environment Variable, be sure to remove the "CLOUDINARY_URL=" from the start of the URL.
+
 
 #### Set the Config Vars
 
@@ -147,6 +281,7 @@ Note: Ensure to set "DEBUG" to "False" in production or during deployment.
 ## Credits 
 
 - [Django](https://docs.djangoproject.com/en/5.0/) & [Django REST Framework](https://www.django-rest-framework.org/) documentation were consulted regularly throughout the development of the API. 
+- Code Institute's drf-api walkthrough project was also consulted for guidance during the development of the API.
 - Credit to [andreagrandi](https://gist.github.com/andreagrandi/14e07afd293fafaea770f69cf66cac14) for the IsAdminOrReadOnly permission class.
 - Default profile picture was obtained from [mostkingto on Vecteezy](https://www.vecteezy.com/vector-art/20765399-default-profile-account-unknown-icon-black-silhouette).
 
